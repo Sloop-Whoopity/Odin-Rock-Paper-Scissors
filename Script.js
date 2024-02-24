@@ -1,7 +1,12 @@
 console.log("Hello World from the external file")
 
 let computerSelection = "";
-let playerWord = prompt("Do you pick rock, paper, or scissors?", "");
+let playerWord = "";
+let playerWins = false;
+let playerScore = 0;
+let computerScore = 0;
+let tie = false;
+playGame()
 
 function getComputerChoice() {
     let decision = Math.floor(Math.random() * 10); 
@@ -17,24 +22,44 @@ function getComputerChoice() {
     return computerSelection
 }
 
-function executeGame() {
-    let playerWins = false;
+function playRound() {
     let beginningLetter = playerWord.at(0);
     let slicedWord = playerWord.slice(1);
     let playerSelection = beginningLetter.toUpperCase() + slicedWord.toLowerCase();
     console.log("Conjoined Word", playerSelection)
-    if (playerSelection === "rock" && computerSelection === "scissors") {playerWins = true;
-    } else if (playerSelection === "paper" && computerSelection === "rock") {playerWins = true;
-    } else if (playerSelection === "scissors" && computerSelection === "paper") {playerWins = true;
+    if (playerSelection === "Rock" && computerSelection === "Scissors") {playerWins = true;
+    } else if (playerSelection === "Paper" && computerSelection === "Rock") {playerWins = true;
+    } else if (playerSelection === "Scissors" && computerSelection === "Paper") {playerWins = true;
     } else {playerWins = false}
     
 
     console.log("playerWins", playerWins)
 
     if (playerWins === true) {alert(`You Win! ${playerSelection} " beats " ${computerSelection}`);
-    } else if (playerWins === false && playerSelection === computerSelection) {alert(`Tie! ${playerSelection} matches ${computerSelection}`);
+    } else if (playerWins === false && playerSelection === computerSelection) {tie = true, alert(`Tie! ${playerSelection} matches ${computerSelection}`);
     } else {alert(`You Lose! ${computerSelection} " beats " ${playerSelection}`);
     }
 
+    console.log("tie", tie)
+    return tie
+    }
+
+function playGame() {
+    alert("Are you ready to play ROCK, PAPER, SCISSORS?!?!");
+    playerWord = prompt("Do you pick rock, paper, or scissors?", "");
+    getComputerChoice()
+    playRound()
+    if (playerWins === true) {playerScore++;
+    } else if (playerWins === false && tie === true) {alert("There was a tie! No one gets any points!");
+    } else {computerScore++;
+    }
+    
+    console.log("Player Score: ", playerScore)
+    console.log("Computer Score: ", computerScore)
+
+    let anotherGame = prompt("Would you like to play again?", "")
+    if (anotherGame.toLowerCase() === "no" || anotherGame == null || anotherGame.toLowerCase() === "No Thank You") {alert("Game Over");
+    } else {playGame();
+    }
 }
 
