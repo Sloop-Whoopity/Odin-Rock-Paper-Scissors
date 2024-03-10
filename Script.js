@@ -6,7 +6,30 @@ let playerWins = false;
 let playerScore = 0;
 let computerScore = 0;
 let tie = false;
-playGame()
+
+const buttons = document.querySelector(".allButtons")
+
+alert("Are you ready to play Rock, Paper, Scissors?!")
+
+buttons.addEventListener("click", (event) => {
+    let target = event.target;
+    switch(target.id) {
+        case "rock":
+            playerWord = "rock";
+            playGame();
+            break;
+        case "paper":
+            playerWord = "paper";
+            playGame();
+            break;
+        case "scissors":
+            playerWord = "scissors";
+            playGame();
+            break;
+    }
+});
+
+// playGame()
 
 function getComputerChoice() {
     let decision = Math.floor(Math.random() * 10); 
@@ -51,35 +74,41 @@ function playRound() {
     }
 
 function playGame() {
-    alert("Are you ready to play ROCK, PAPER, SCISSORS?!?!");
-    playerWord = prompt("Do you pick rock, paper, or scissors?", "");
-    getComputerChoice()
-
-    let badChoice = false;
+    
+    // playerWord = prompt("Do you pick rock, paper, or scissors?", "");
     playerWins = false;
-    if (playerWord.toLowerCase() === "rock"
-        || playerWord.toLowerCase() === "paper" 
-        || playerWord.toLowerCase() === "scissors"
-        ) {playRound();
-        } else {
-            alert("I only gave you three choices. And yet? You chose poorly!");
-            badChoice = true;
-        }
+    getComputerChoice();
+    playRound();
+
+    // let badChoice = false;
+    
+    // if (playerWord.toLowerCase() === "rock"
+    //     || playerWord.toLowerCase() === "paper" 
+    //     || playerWord.toLowerCase() === "scissors"
+    //     ) {playRound();
+        // } else {
+        //     alert("I only gave you three choices. And yet? You chose poorly!");
+        //     badChoice = true;
+        // }
 
     if (playerWins === true) {playerScore++;
     } else if (playerWins === false && tie === true) {alert("There was a tie! No one gets any points!");
-    } else if (badChoice !== true) {computerScore++;
-    }
+    } else {computerScore++;
+    } 
+    // } else if (badChoice !== true) {computerScore++;
+    // }
     
     console.log("Player Score: ", playerScore)
     console.log("Computer Score: ", computerScore)
 
-    let anotherGame = prompt("Would you like to play again?", "")
+    // let anotherGame = prompt("Would you like to play again?", "")
 
-    if (anotherGame.toLowerCase() === "no" || 
-    anotherGame == null || 
-    anotherGame.toLowerCase() === "No Thank You") {alert("Game Over");
-    } else {playGame();
-    }
+    // if (anotherGame.toLowerCase() === "no" || 
+    // anotherGame == null || 
+    // anotherGame.toLowerCase() === "No Thank You") {alert("Game Over");
+    // } else {
+    //     alert("Are you ready to play ROCK, PAPER, SCISSORS?!?!");
+    //     playGame();
+//     }
 }
 
