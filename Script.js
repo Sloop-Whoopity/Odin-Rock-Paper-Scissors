@@ -30,10 +30,6 @@ buttons.addEventListener("click", (event) => {
 });
 
 
-
-
-// playGame()
-
 function getComputerChoice() {
     let decision = Math.floor(Math.random() * 10); 
     console.log("decision", decision)
@@ -82,25 +78,9 @@ function playRound() {
 
 function playGame() {
     
-    // playerWord = prompt("Do you pick rock, paper, or scissors?", "");
     getComputerChoice();
     playRound();
 
-    // let badChoice = false;
-    
-    // if (playerWord.toLowerCase() === "rock"
-    //     || playerWord.toLowerCase() === "paper" 
-    //     || playerWord.toLowerCase() === "scissors"
-    //     ) {playRound();
-        // } else {
-        //     alert("I only gave you three choices. And yet? You chose poorly!");
-        //     badChoice = true;
-        // }
-
-    // if (playerWins === true) {++playerScore.textContent;
-    // } else if (playerWins === false && tie === true) {alert("There was a tie! No one gets any points!");
-    // } else {++computerScore.textContent;
-    // } 
     
     if (+playerScore.textContent === 5) {
         playerScore.textContent = 5;
@@ -111,35 +91,30 @@ function playGame() {
         alert("You lose! The computer has won the game!");
         playAgain()
     }
-    // } else if (badChoice !== true) {computerScore++;
-    // }
-   
-    
-    // console.log("Player Score: ", playerScore)
-    // console.log("Computer Score: ", computerScore)
-    
-
-    // let anotherGame = prompt("Would you like to play again?", "")
-
-    // if (anotherGame.toLowerCase() === "no" || 
-    // anotherGame == null || 
-    // anotherGame.toLowerCase() === "No Thank You") {alert("Game Over");
-    // } else {
-    //     alert("Are you ready to play ROCK, PAPER, SCISSORS?!?!");
-    //     playGame();
-//     }
 }
 
 function playAgain() {
-    let playAgain = false;
+    let rockButton = document.querySelector(".rock");
+    let paperButton = document.querySelector(".paper");
+    let scissorsButton = document.querySelector(".scissors");
+
+    rockButton.disabled = true;
+    paperButton.disabled = true;
+    scissorsButton.disabled = true;
+
     const divContainer = document.createElement("div")
     const playAgainButton = document.createElement("button")
     playAgainButton.textContent = "Play Again?";
     buttons.appendChild(divContainer)
     divContainer.appendChild(playAgainButton)
+    
     playAgainButton.addEventListener("click", () => {
         playerScore.textContent = 0;
         computerScore.textContent = 0;
+        rockButton.disabled = false;
+        paperButton.disabled = false;
+        scissorsButton.disabled = false;
         playAgainButton.remove(); 
     });
+
 }
