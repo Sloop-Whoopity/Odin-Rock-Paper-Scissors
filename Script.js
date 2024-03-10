@@ -3,17 +3,17 @@ console.log("Hello World from the external file")
 let computerSelection = "";
 let playerWord = "";
 let playerWins = false;
-let playerScore = 0;
-let computerScore = 0;
+let playerScore = document.querySelector(".playerScore");
+playerScore.textContent = 0;
+let computerScore = document.querySelector(".computerScore");
+computerScore.textContent = 0;
 let tie = false;
 
 const buttons = document.querySelector(".allButtons")
 
-alert("Are you ready to play Rock, Paper, Scissors?!")
-
 buttons.addEventListener("click", (event) => {
     let target = event.target;
-    switch(target.id) {
+    switch(target.className) {
         case "rock":
             playerWord = "rock";
             playGame();
@@ -28,6 +28,9 @@ buttons.addEventListener("click", (event) => {
             break;
     }
 });
+
+
+
 
 // playGame()
 
@@ -47,6 +50,8 @@ function getComputerChoice() {
 }
 
 function playRound() {
+    tie = false;
+    playerWins = false;
     let beginningLetter = playerWord.at(0);
     let slicedWord = playerWord.slice(1);
     let playerSelection = beginningLetter.toUpperCase() + slicedWord.toLowerCase();
@@ -61,12 +66,14 @@ function playRound() {
 
     console.log("playerWins", playerWins)
 
-    if (playerWins === true) {alert(`You Win! ${playerSelection} " beats " ${computerSelection}`);
-    } else if (playerWins === false && playerSelection === computerSelection) 
-        {tie = true, alert(`Tie! ${playerSelection} matches ${computerSelection}`);
+    if (playerWins === true) {
+        alert(`You Win! ${playerSelection} " beats " ${computerSelection}`);
+        ++playerScore.textContent;
+    } else if (playerWins === false && playerSelection === computerSelection) {
+        tie = true, alert(`Tie! ${playerSelection} matches ${computerSelection}`);
     } else {
         alert(`You Lose! ${computerSelection} " beats " ${playerSelection}`);
-        tie = false;
+        ++computerScore.textContent;
     }
 
     console.log("tie", tie)
@@ -76,7 +83,6 @@ function playRound() {
 function playGame() {
     
     // playerWord = prompt("Do you pick rock, paper, or scissors?", "");
-    playerWins = false;
     getComputerChoice();
     playRound();
 
@@ -91,15 +97,27 @@ function playGame() {
         //     badChoice = true;
         // }
 
-    if (playerWins === true) {playerScore++;
-    } else if (playerWins === false && tie === true) {alert("There was a tie! No one gets any points!");
-    } else {computerScore++;
-    } 
+    // if (playerWins === true) {++playerScore.textContent;
+    // } else if (playerWins === false && tie === true) {alert("There was a tie! No one gets any points!");
+    // } else {++computerScore.textContent;
+    // } 
+    
+    if (+playerScore.textContent === 5) {
+        playerScore.textContent = 5;
+        alert("You have won the game");
+        playAgain()
+    } else if (+computerScore.textContent === 5){
+        computerScore.textContent = 5;
+        alert("You lose! The computer has won the game!");
+        playAgain()
+    }
     // } else if (badChoice !== true) {computerScore++;
     // }
+   
     
-    console.log("Player Score: ", playerScore)
-    console.log("Computer Score: ", computerScore)
+    // console.log("Player Score: ", playerScore)
+    // console.log("Computer Score: ", computerScore)
+    
 
     // let anotherGame = prompt("Would you like to play again?", "")
 
@@ -112,3 +130,16 @@ function playGame() {
 //     }
 }
 
+function playAgain() {
+    let playAgain = false;
+    const divContainer = document.createElement("div")
+    const playAgainButton = document.createElement("button")
+    playAgainButton.textContent = "Play Again?";
+    buttons.appendChild(divContainer)
+    divContainer.appendChild(playAgainButton)
+    playAgainButton.addEventListener("click", () => {
+        playerScore.textContent = 0;
+        computerScore.textContent = 0;
+        playAgainButton.remove(); 
+    });
+}
